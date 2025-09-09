@@ -295,46 +295,6 @@
     }
     // akses global untuk onclick HTML
     window.openShare = openShare; window.closeShare = closeShare; window.copyLink = copyLink;
-
-      <!-- Proteksi anti view-source, F12, klik kanan -->
-  <script>
-  (function () {
-    // Blok klik kanan (kecuali iklan pakai class allow-context)
-    document.addEventListener('contextmenu', function (e) {
-      if (!e.target.closest('.allow-context, iframe')) {
-        e.preventDefault();
-      }
-    });
-
-    // Blok kombinasi tombol umum
-    document.addEventListener('keydown', function (e) {
-      // F12
-      if (e.key === "F12") {
-        e.preventDefault();
-      }
-      // Ctrl+Shift+I / J / C
-      if (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key.toUpperCase())) {
-        e.preventDefault();
-      }
-      // Ctrl+U, Ctrl+S
-      if (e.ctrlKey && ["U","S"].includes(e.key.toUpperCase())) {
-        e.preventDefault();
-      }
-    });
-
-    // Blok copy/cut/select
-    document.addEventListener('copy', e => e.preventDefault());
-    document.addEventListener('cut', e => e.preventDefault());
-    document.addEventListener('selectstart', e => e.preventDefault());
-
-    // Deteksi devtools sederhana
-    setInterval(function () {
-      if ((window.outerWidth - window.innerWidth) > 200 ||
-          (window.outerHeight - window.innerHeight) > 200) {
-        document.body.innerHTML = "<h2 style='color:red;text-align:center;margin-top:20%'>⚠ Proteksi aktif. Tutup DevTools untuk melanjutkan.</h2>";
-      }
-    }, 1000);
-  })();
   </script>
 </body>
 </html>
