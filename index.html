@@ -44,13 +44,16 @@
     .btn:hover{transform:translateY(-5px); opacity:.9}
     .circle{
       width:66px; height:66px; border-radius:50%; display:grid; place-items:center;
-      font-size:22px; box-shadow:0 0 14px rgba(255,255,255,.25);
+      font-size:22px;
     }
     .label{font-size:13px; color:#ddd}
 
     .play  .circle{ background: var(--play)}
     .more  .circle{ background: var(--more)}
     .share .circle{ background: var(--share)}
+
+    /* Hilangkan box-shadow putih */
+    .circle{ box-shadow:none; }
 
     /* Modal share */
     .modal{position:fixed; inset:0; display:none; place-items:center; z-index:1000; background:rgba(0,0,0,.7)}
