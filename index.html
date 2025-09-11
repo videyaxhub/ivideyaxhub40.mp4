@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Video Hub — Fast</title>
+  <title>Video Hub — Elegant</title>
   <style>
     :root{
       --bg1:#000; --bg2:#1a0000; --bg3:#330000; --bg4:#660000;
-      --glass: rgba(255,255,255,0.05);
+      --glass: rgba(255,255,255,0.04);
       --text:#fff; --muted:#aaa;
       --play:#e50914; --more:#ff3333; --share:#ff7518;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%;}
     body{
-      font-family: system-ui, Arial;
+      font-family: "Segoe UI", Arial, sans-serif;
       color:var(--text);
       background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), var(--bg4));
       background-size: 400% 400%;
-      animation: gradientMove 12s ease infinite;
+      animation: gradientMove 14s ease infinite;
       display:flex; flex-direction:column; align-items:center; justify-content:center;
       text-align:center; padding:20px;
     }
@@ -28,23 +28,32 @@
       100%{background-position:0% 50%}
     }
 
-    h1.title{font-size:clamp(24px,4vw,38px); margin-bottom:8px}
-    p.subtitle{color:var(--muted); font-size:clamp(14px,2.5vw,16px); margin-bottom:30px}
+    h1.title{font-size:clamp(24px,4vw,36px); margin-bottom:6px; font-weight:600}
+    p.subtitle{color:var(--muted); font-size:clamp(14px,2.5vw,16px); margin-bottom:22px}
 
+    /* Video preview */
+    .preview{
+      max-width:720px; width:100%; margin:0 auto 24px;
+      border-radius:12px; overflow:hidden;
+      box-shadow:0 6px 18px rgba(0,0,0,.6);
+    }
+    video{width:100%; height:auto; display:block;}
+
+    /* Action buttons */
     .button-container{
-      display:flex; gap:22px; justify-content:center; flex-wrap:wrap;
-      padding:18px 24px; border-radius:20px; background:var(--glass);
+      display:flex; gap:20px; justify-content:center; flex-wrap:wrap;
+      padding:16px 20px; border-radius:16px; background:var(--glass);
       backdrop-filter:blur(10px);
     }
     .btn{
       display:flex; flex-direction:column; align-items:center; gap:6px;
-      text-decoration:none; color:#fff; font-weight:700;
+      text-decoration:none; color:#fff; font-weight:600;
       transition: transform .2s ease, opacity .2s ease;
     }
-    .btn:hover{transform:translateY(-5px); opacity:.9}
+    .btn:hover{transform:translateY(-3px); opacity:.9}
     .circle{
-      width:66px; height:66px; border-radius:50%; display:grid; place-items:center;
-      font-size:22px;
+      width:60px; height:60px; border-radius:50%; display:grid; place-items:center;
+      font-size:20px;
     }
     .label{font-size:13px; color:#ddd}
 
@@ -52,26 +61,34 @@
     .more  .circle{ background: var(--more)}
     .share .circle{ background: var(--share)}
 
-    /* Hilangkan box-shadow putih */
-    .circle{ box-shadow:none; }
-
     /* Modal share */
-    .modal{position:fixed; inset:0; display:none; place-items:center; z-index:1000; background:rgba(0,0,0,.7)}
+    .modal{position:fixed; inset:0; display:none; place-items:center; z-index:1000; background:rgba(0,0,0,.65)}
     .modal.show{display:grid;}
     .card{
-      width:min(340px,90vw); background:#111; border-radius:14px; padding:16px;
-      box-shadow:0 12px 28px rgba(0,0,0,.7); text-align:center; border:1px solid rgba(255,255,255,.1)
+      width:min(340px,90vw); background:#111; border-radius:12px; padding:18px;
+      box-shadow:0 8px 20px rgba(0,0,0,.7); text-align:center; border:1px solid rgba(255,255,255,.08)
     }
-    .card h2{margin:0 0 12px; font-size:18px}
-    .opt{display:block; padding:10px 12px; border-radius:10px; text-decoration:none; color:#fff; font-weight:600; margin:8px 0}
-    .copy{background:#444}
-    .wa{background:#25D366}
-    .tg{background:#0088cc}
-    .close{margin-top:10px; display:inline-block; padding:8px 16px; border-radius:8px; background:#e50914; cursor:pointer; font-weight:700}
+    .card h2{margin:0 0 16px; font-size:18px; font-weight:600}
+
+    .share-options{
+      display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-bottom:12px;
+    }
+    .opt{
+      display:flex; flex-direction:column; align-items:center; text-decoration:none;
+      font-weight:600; color:#fff; transition:.2s;
+    }
+    .opt:hover{transform:translateY(-3px); opacity:.9}
+    .opt .circle{font-size:18px; width:56px; height:56px}
+
+    .copy .circle{background:#555}
+    .wa   .circle{background:#25D366}
+    .tg   .circle{background:#0088cc}
+
+    .close{margin-top:12px; display:inline-block; padding:8px 18px; border-radius:8px; background:#e50914; cursor:pointer; font-weight:600}
 
     @media(max-width:480px){
-      .circle{width:60px;height:60px;font-size:20px}
-      .button-container{gap:16px; padding:14px 16px}
+      .circle{width:54px;height:54px;font-size:18px}
+      .button-container{gap:14px; padding:14px 16px}
     }
   </style>
 </head>
@@ -81,8 +98,17 @@
     <h1 class="title">Welcome to My Video Hub 🎬</h1>
     <p class="subtitle">Fast, simple, and premium video experience.</p>
 
+    <!-- Video Preview -->
+    <div class="preview">
+      <video poster="https://cdn.videy.co/edhWodl51.mp4?text=Preview+Video" controls>
+        <source src="https://gociicdnvideyco.github.io/gociXhubvideyco40.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+    </div>
+
+    <!-- Action Buttons -->
     <div class="button-container">
-      <a href="https://gociicdnvideyco.github.io/gociXhubvideyco40.mp4/" class="btn play">
+      <a href="https://gociicdnvideyco.github.io/gociXhubvideyco40.mp4" class="btn play">
         <div class="circle">▶</div>
         <span class="label">Play</span>
       </a>
@@ -103,11 +129,22 @@
   <div class="modal" id="shareModal">
     <div class="card">
       <h2>Share This Video</h2>
-      <a class="opt copy" href="#" onclick="copyLink(event)">📋 Copy Link</a>
-      <a class="opt wa" target="_blank" rel="noopener"
-         href="https://wa.me/?text=https://gociicdnvideyco.github.io/videy-streaming/">💬 Share to WhatsApp</a>
-      <a class="opt tg" target="_blank" rel="noopener"
-         href="https://t.me/share/url?url=https://gociicdnvideyco.github.io/videy-streaming/&text=Check%20this%20video!">📨 Share to Telegram</a>
+      <div class="share-options">
+        <a class="opt copy" href="#" onclick="copyLink(event)">
+          <div class="circle">📋</div>
+          <span class="label">Copy</span>
+        </a>
+        <a class="opt wa" target="_blank" rel="noopener"
+           href="https://wa.me/?text=https://gociicdnvideyco.github.io/videy-streaming/" onclick="closeShare()">
+          <div class="circle">💬</div>
+          <span class="label">WhatsApp</span>
+        </a>
+        <a class="opt tg" target="_blank" rel="noopener"
+           href="https://t.me/share/url?url=https://gociicdnvideyco.github.io/videy-streaming/&text=Check%20this%20video!" onclick="closeShare()">
+          <div class="circle">📨</div>
+          <span class="label">Telegram</span>
+        </a>
+      </div>
       <span class="close" onclick="closeShare()">Close</span>
     </div>
   </div>
@@ -125,6 +162,7 @@
         const ta=document.createElement('textarea'); ta.value=url; document.body.appendChild(ta);
         ta.select(); document.execCommand('copy'); ta.remove(); alert('Link copied!');
       }
+      closeShare();
     }
     document.addEventListener('keydown', e=>{ if(e.key==="Escape") closeShare(); });
   </script>
